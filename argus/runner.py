@@ -18,6 +18,9 @@ from .judges import judge
 
 def wilson(successes: int, n: int, z: float = 1.96) -> tuple:
     """Wilson score interval for a binomial proportion."""
+    if n < 0 or successes < 0 or successes > n:
+        raise ValueError(
+            f"invalid counts: successes={successes}, n={n}")
     if n == 0:
         return (0.0, 0.0)
     p = successes / n

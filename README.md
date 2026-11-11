@@ -1,5 +1,7 @@
 # Argus: LLM Red-Team Evaluation Harness
 
+![Argus banner](banner.png)
+
 **By Gavin Blacklock (Epsilon0xCell)**
 
 Argus measures how language models resist prompt injection,
@@ -45,7 +47,9 @@ python -m argus.cli scan --base-url http://localhost:11434 --model llama3.1
 
 The harness sends its own system prompt with the canary
 planted, runs the extraction and injection attacks, and
-writes a scored report. Policy objectives are mock-only:
+writes a scored report. If the server cannot be reached,
+scan prints an error naming the URL and exits with status
+1 instead of a traceback. Policy objectives are mock-only:
 real-model policy behaviour needs human judgement, and
 Argus does not fake it with a keyword guess.
 

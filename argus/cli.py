@@ -64,7 +64,13 @@ def scan(argv: list[str]) -> int:
     a = p.parse_args(argv)
     target = HttpTarget(a.base_url, a.model, SYSTEM_FOR_REAL,
                         api_key=a.api_key)
-    campaign = run_campaign(target)
+    import urllib.error
+    try:
+        campaign = run_campaign(target)
+    except (urllib.error.URLError, OSError) as exc:
+        print(f"error: could not reach {a.base_url}: {exc}",
+              file=sys.stderr)
+        return 1
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     (out / "scan_report.md").write_text(render_report(
